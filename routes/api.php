@@ -13,11 +13,6 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
-
 Route::post('register', 'UserController@register');//注册
 
 Route::post('login', 'UserController@login');//登陆
