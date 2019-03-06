@@ -16,3 +16,5 @@ use Illuminate\Http\Request;
 Route::post('register', 'UserController@register');//注册
 
 Route::post('login', 'UserController@login');//登陆
+
+Route::resource('articles', 'ArticleController');//文章管理
