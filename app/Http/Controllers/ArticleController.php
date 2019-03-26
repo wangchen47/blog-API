@@ -97,4 +97,17 @@ class ArticleController extends Controller
     {
         //
     }
+
+  public function getFiliterIndex(Request $request)
+  {
+    $filter = $request->query('filter');
+
+    $pageSize = $request->query('page_size',10);
+
+    $article = $this->articleInterface->getFiliter($filter, $pageSize);
+
+
+
+    return $article;
+  }
 }

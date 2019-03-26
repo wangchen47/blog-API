@@ -5,4 +5,6 @@ interface ArticleInterface {
 
   public function getArticles($filter, $pageSize);
 
+  public function getFiliter($filter, $pageSize);
+
 }

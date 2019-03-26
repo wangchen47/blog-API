@@ -17,4 +17,15 @@ class ArticleRepository implements ArticleInterface {
     }
     return $query->paginate($pageSize);
   }
+
+  public function getFiliter($filter, $pageSize)
+  {
+    $query = Article::with('label', 'techCategory', 'userInfo')->orderBy('created_at', 'desc');
+
+    if ($filter) {
+      $filter = "%{$filter}%";
+      $query->where('name', 'like', $filter);
+    }
+    return $query->paginate($pageSize);
+  }
 }
