@@ -16,7 +16,6 @@ class CreateTechCategoriesTable extends Migration
       Schema::create('tech_categories', function (Blueprint $table) {
         $table->smallIncrements('id')->comment('技术分类ID');
         $table->string('name', 255)->comment('技术分类名称');
-        $table->string('icon_url', 255)->comment('图标访问路径');
         $table->timestamps();
       });
     }

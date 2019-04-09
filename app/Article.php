@@ -12,11 +12,8 @@ class Article extends Model
        'tech_category_id',
        'label_id',
        'title',
-       'cover_url',
        'intro',
        'content',
-       'url',
-       'created_time',
        'count_views',
     ];
 
@@ -40,8 +37,8 @@ class Article extends Model
       return $this->belongsTo(TechCategory::class, 'tech_category_id', 'id');
     }
 
-    public function userInfo()
+    public function user()
     {
-      return $this->belongsTo(UserInfo::class, 'created_user_id', 'user_id');
+      return $this->belongsTo(User::class, 'created_user_id', 'id');
     }
 }

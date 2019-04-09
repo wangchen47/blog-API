@@ -35,4 +35,9 @@ class User extends Authenticatable
     {
        return $this->hasOne(UserInfo::class, 'user_id', 'id');
     }
+
+    public function article()
+    {
+      return $this->hasOne(Article::class, 'created_user_id', 'id');
+    }
 }

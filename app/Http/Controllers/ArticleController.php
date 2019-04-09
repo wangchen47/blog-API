@@ -1,8 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Label;
 use App\Repositories\Interfaces\ArticleInterface;
+use App\User;
 use Illuminate\Http\Request;
 
 /**
@@ -21,6 +22,7 @@ class ArticleController extends Controller
      */
     public function index(Request $request)
     {
+
       $filter = $request->input('filter');
 
       $pageSize = $request->input('page_size',10);
@@ -50,7 +52,24 @@ class ArticleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $title = $request->input('title');
+
+        $intro = $request->input('intro');
+        $content = $request->input('content');
+        $tech_category_id = $request->input('techCategory');
+        $label = $request->input('label');
+        $created_user = $request->input('created_user');
+
+        $label_id = Label::insertGetId(['name' => $label]);
+        $created_user_id = User::insertGetId(['name' => $created_user]);
+        //dd($created_user_id);
+
+        $this->articleInterface->createArticles($title, $intro, $content, $tech_category_id, $label_id, $created_user_id);
+
+        return response()->json([
+          'status' => 200,
+          'message' => '添加成功',
+        ]);
     }
 
     /**
@@ -98,16 +117,11 @@ class ArticleController extends Controller
         //
     }
 
-  public function getFiliterIndex(Request $request)
-  {
-    $filter = $request->query('filter');
+   public function getFiliterIndex(Request $request, $id)
+   {
+     $pageSize = $request->input('page_size',10);
+     $article = $this->articleInterface->getFiliter($id, $pageSize);
 
-    $pageSize = $request->query('page_size',10);
-
-    $article = $this->articleInterface->getFiliter($filter, $pageSize);
-
-
-
-    return $article;
-  }
+     return $article;
+   }
 }

@@ -20,7 +20,6 @@ $factory->define(UserInfo::class, function (Faker $faker) {
     return [
        'user_id' => $faker->unique()->numberBetween(1,30),
        'real_name' => $faker->lastName,
-       'avatar_url'=> $faker->imageUrl(96,96),
     ];
 });
 
@@ -31,11 +30,8 @@ $factory->define(Article::class, function (Faker $faker) {
       'tech_category_id' => $faker->numberBetween(1,5),
       'label_id' => $faker->numberBetween(1,5),
       'title' => $faker->sentence(6),
-      'cover_url' => $faker->imageUrl(640,480),
       'intro' => $faker->paragraph(3),
       'content' => $faker->text(150),
-      'url' => $faker->url,
-      'created_time' => Carbon::createFromDate(2019,1,13),
       'count_views' => $faker->numberBetween(1,20),
     ];
 });
