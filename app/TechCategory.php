@@ -9,7 +9,6 @@ class TechCategory extends Model
   protected $fillable = [
     'id',
     'name',
-    'icon_url',
   ];
 
   protected $hidden = [

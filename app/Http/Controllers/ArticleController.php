@@ -23,6 +23,7 @@ class ArticleController extends Controller
     public function index(Request $request)
     {
 
+
       $filter = $request->input('filter');
 
       $pageSize = $request->input('page_size',10);
@@ -58,11 +59,10 @@ class ArticleController extends Controller
         $content = $request->input('content');
         $tech_category_id = $request->input('techCategory');
         $label = $request->input('label');
-        $created_user = $request->input('created_user');
+        $created_user = $request->input('createdUser');
 
         $label_id = Label::insertGetId(['name' => $label]);
         $created_user_id = User::insertGetId(['name' => $created_user]);
-        //dd($created_user_id);
 
         $this->articleInterface->createArticles($title, $intro, $content, $tech_category_id, $label_id, $created_user_id);
 
@@ -91,7 +91,9 @@ class ArticleController extends Controller
      */
     public function edit($id)
     {
-        //
+      $article = $this->articleInterface->editArticleById($id);
+
+      return $article;
     }
 
     /**
@@ -103,7 +105,34 @@ class ArticleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+      $title = $request->input('title');
+
+      $intro = $request->input('intro');
+      $content = $request->input('content');
+      $tech_category_id = $request->input('techCategory');
+      $label = $request->input('label');
+      $created_user = $request->input('createdUser');
+
+
+      if (Label::where('name',$label)->exists()) {
+        $label_id = Label::where('name',$label)->value('id');
+      } else {
+        $label_id = Label::insertGetId(['name' => $label]);
+      }
+
+      if (User::where('name',$created_user)->exists()) {
+        $created_user_id = User::where('name',$created_user)->value('id');
+      } else {
+        $created_user_id = User::insertGetId(['name' => $created_user]);
+      }
+
+
+      $this->articleInterface->updateArticle($id ,$title, $intro, $content, $tech_category_id, $label_id, $created_user_id);
+
+      return response()->json([
+        'status' => 200,
+        'message' => '更新成功',
+      ]);
     }
 
     /**
@@ -114,7 +143,14 @@ class ArticleController extends Controller
      */
     public function destroy($id)
     {
-        //
+        //$id = $request->get('id');
+        $this->articleInterface->deleteById($id);
+
+        return response()->json([
+          'status' => 200,
+          'message' => '删除成功',
+        ]);
+
     }
 
    public function getFiliterIndex(Request $request, $id)
@@ -124,4 +160,6 @@ class ArticleController extends Controller
 
      return $article;
    }
+
+
 }

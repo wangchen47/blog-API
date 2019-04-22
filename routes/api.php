@@ -21,3 +21,4 @@ Route::resource('articles', 'ArticleController');//文章管理
 
 Route::get('articles-filiter/{id}/{pageSiz}/{page}', 'ArticleController@getFiliterIndex');//文章筛选
 
+Route::put('user/{id}', 'ArticleController@update');
